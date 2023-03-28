@@ -3,7 +3,7 @@ import { AppContext } from '../../../common/AppContext';
 import { IDemo07Props } from './IDemo07Props';
 import DisplayLists from './modules/DisplayLists';
 
-const Demo06: React.FC<IDemo07Props> = (props) => {
+const Demo07: React.FC<IDemo07Props> = (props) => {
   return (
     <AppContext.Provider value={{...props}}>
         <DisplayLists />
@@ -11,4 +11,4 @@ const Demo06: React.FC<IDemo07Props> = (props) => {
   );
 }
 
-export default Demo06;
+export default Demo07;

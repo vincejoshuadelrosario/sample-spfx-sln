@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { IDisplayListsProps } from './IDisplayListsProps';
-import { AppContext } from '../../../../common/AppContext';
 import styles from './DisplayLists.module.scss';
+// import { useCurrentSiteUrl } from '../../../../hooks/useCurrentSiteUrl';
+// import { useSpHttpClient } from '../../../../hooks/useSpHttpClient';
+// import { useCurrentSiteUrl, useSpHttpClient } from '../../../../hooks';
+import { useAppContext } from '../../../../hooks';
 
 const DisplayLists: React.FC<IDisplayListsProps> = () => {
-
-    const { currentSiteUrl, spHttpClient } = useContext(AppContext);
-      
+    // const currentSiteUrl = useCurrentSiteUrl();
+    // const spHttpClient = useSpHttpClient();
+    const { currentSiteUrl, spHttpClient } = useAppContext();
+    
     const [siteLists, setSiteLists] = useState<[]>([]);
 
     useEffect(() => {
