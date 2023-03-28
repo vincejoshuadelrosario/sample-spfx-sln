@@ -1,6 +1,6 @@
 import { SPHttpClient } from "@microsoft/sp-http";
 
-export interface IDemo07Props {
+export interface IDisplayListsProps {
   currentSiteUrl: string;
   spHttpClient: SPHttpClient;
 }
