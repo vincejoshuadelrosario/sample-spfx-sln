@@ -19,7 +19,12 @@ const Demo06: React.FC<IDemo06Props> = (props) => {
                       {signal: abortController.signal})
             .then((rawResponse) => rawResponse.json())
             .then((response) => setSiteLists(response.value.map((list: {Title: string}) => list.Title)))
-            .catch((error) => console.error(error));
+            .catch((error) => {
+                if (abortController.signal.aborted) {
+                    return;
+                }
+                console.error(error)
+            });
     return () => abortController.abort();
   }, []);
 
