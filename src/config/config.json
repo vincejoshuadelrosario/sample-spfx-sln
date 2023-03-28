@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "demo-01-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo01/Demo01WebPart.js",
+          "manifest": "./src/webparts/demo01/Demo01WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-02-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo02/Demo02WebPart.js",
+          "manifest": "./src/webparts/demo02/Demo02WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-03-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo03/Demo03WebPart.js",
+          "manifest": "./src/webparts/demo03/Demo03WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-04-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo04/Demo04WebPart.js",
+          "manifest": "./src/webparts/demo04/Demo04WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-05-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo05/Demo05WebPart.js",
+          "manifest": "./src/webparts/demo05/Demo05WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-06-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo06/Demo06WebPart.js",
+          "manifest": "./src/webparts/demo06/Demo06WebPart.manifest.json"
+        }
+      ]
+    },
+    "demo-07-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo07/Demo07WebPart.js",
+          "manifest": "./src/webparts/demo07/Demo07WebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "Demo01WebPartStrings": "lib/webparts/demo01/loc/{locale}.js",
+    "Demo02WebPartStrings": "lib/webparts/demo02/loc/{locale}.js",
+    "Demo03WebPartStrings": "lib/webparts/demo03/loc/{locale}.js",
+    "Demo04WebPartStrings": "lib/webparts/demo04/loc/{locale}.js",
+    "Demo05WebPartStrings": "lib/webparts/demo05/loc/{locale}.js",
+    "Demo06WebPartStrings": "lib/webparts/demo06/loc/{locale}.js",
+    "Demo07WebPartStrings": "lib/webparts/demo07/loc/{locale}.js"
+  }
+}
