@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { IDisplayListsProps } from './IDisplayListsProps';
+import { AppContext } from '../../../../common/AppContext';
+import styles from './DisplayLists.module.scss';
 
-const DisplayLists: React.FC<IDisplayListsProps> = (props) => {
-    const {
-        currentSiteUrl,
-        spHttpClient
-      } = props;
+const DisplayLists: React.FC<IDisplayListsProps> = () => {
+
+    const { currentSiteUrl, spHttpClient } = useContext(AppContext);
       
     const [siteLists, setSiteLists] = useState<[]>([]);
 
@@ -28,19 +28,23 @@ const DisplayLists: React.FC<IDisplayListsProps> = (props) => {
       }, []);
       
     return (
-        siteLists.length === 0
-        ? <span>Loading...</span>
-        : (
-        <div>
-            <ul>
-            {
-                siteLists.map((title: string, index: number) => {
-                return <li key={index}>{title}</li>;
-                })
-            }
-            </ul>
-        </div>
-        )
+      <section className={styles.displayLists}>
+        {
+            siteLists.length === 0
+            ? <span>Loading...</span>
+            : (
+            <div>
+                <ul>
+                {
+                    siteLists.map((title: string, index: number) => {
+                    return <li key={index}>{title}</li>;
+                    })
+                }
+                </ul>
+            </div>
+            )
+        }
+      </section>
     );
 };
 
