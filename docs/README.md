@@ -26,8 +26,12 @@ An SPFx WebPart with _React Hooks: useState and useEffect_ implementation.
 
 ## Demo-06
 
-An SPFx WebPart with _React Hooks: useContext_ implementation.
+An SPFx WebPart with _React Hooks: useEffect_ with _AbortController_ implementation.
 
 ## Demo-07
+
+An SPFx WebPart with _React Hooks: useContext_ implementation.
+
+## Demo-08
 
 An SPFx WebPart with _React Hooks_ and _ServiceScope_ implementation.
