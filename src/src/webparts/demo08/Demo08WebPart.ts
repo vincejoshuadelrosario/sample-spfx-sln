@@ -21,12 +21,15 @@ export default class Demo08WebPart extends BaseClientSideWebPart<IDemo08WebPartP
     const element: React.ReactElement<IDemo08Props> = React.createElement(
       Demo08,
       {
-        currentSiteUrl: this.context.pageContext.web.absoluteUrl,
-        spHttpClient: this.context.spHttpClient
+        serviceScope: this.context.serviceScope
       }
     );
 
     ReactDom.render(element, this.domElement);
+  }
+
+  protected onInit(): Promise<void> {
+    return super.onInit();
   }
 
   protected onDispose(): void {
