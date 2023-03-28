@@ -57,6 +57,14 @@
           "manifest": "./src/webparts/demo07/Demo07WebPart.manifest.json"
         }
       ]
+    },
+    "demo-08-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/demo08/Demo08WebPart.js",
+          "manifest": "./src/webparts/demo08/Demo08WebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -67,6 +75,7 @@
     "Demo04WebPartStrings": "lib/webparts/demo04/loc/{locale}.js",
     "Demo05WebPartStrings": "lib/webparts/demo05/loc/{locale}.js",
     "Demo06WebPartStrings": "lib/webparts/demo06/loc/{locale}.js",
-    "Demo07WebPartStrings": "lib/webparts/demo07/loc/{locale}.js"
+    "Demo07WebPartStrings": "lib/webparts/demo07/loc/{locale}.js",
+    "Demo08WebPartStrings": "lib/webparts/demo08/loc/{locale}.js"
   }
 }
