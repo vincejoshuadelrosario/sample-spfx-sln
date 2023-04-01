@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppContext } from '../common/AppContext';
-import { IAppContextProps } from '../common/IAppContextProps';
+import { AppContext, IAppContextProps, ISampleAppContextProps, SampleAppContext } from '../common/AppContext';
 
+export const useSampleAppContext = (): ISampleAppContextProps => useContext(SampleAppContext);
 export const useAppContext = (): IAppContextProps => useContext(AppContext);

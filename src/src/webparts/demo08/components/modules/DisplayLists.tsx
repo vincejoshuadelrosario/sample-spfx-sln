@@ -4,11 +4,11 @@ import { IDisplayListsProps } from './IDisplayListsProps';
 import styles from '../Demo08.module.scss';
 import { IListService } from '../../../../services/core/IListsService';
 import ListsService from '../../../../services/core/ListsService';
-import { ServiceContext } from '../../../../common/ServiceContext';
+import { AppContext } from '../../../../common/AppContext';
 
 const DisplayLists: React.FC<IDisplayListsProps> = () => {
     const [siteLists, setSiteLists] = useState<string[]>([]);
-    const { serviceScope } = useContext(ServiceContext);
+    const { serviceScope } = useContext(AppContext);
 
     useEffect(() => {
         const abortController = new AbortController();

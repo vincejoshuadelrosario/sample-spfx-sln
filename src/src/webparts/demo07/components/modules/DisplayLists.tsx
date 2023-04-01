@@ -6,12 +6,12 @@ import styles from './DisplayLists.module.scss';
 // import { useCurrentSiteUrl } from '../../../../hooks/useCurrentSiteUrl';
 // import { useSpHttpClient } from '../../../../hooks/useSpHttpClient';
 // import { useCurrentSiteUrl, useSpHttpClient } from '../../../../hooks';
-import { useAppContext } from '../../../../hooks';
+import { useSampleAppContext } from '../../../../hooks';
 
 const DisplayLists: React.FC<IDisplayListsProps> = () => {
     // const currentSiteUrl = useCurrentSiteUrl();
     // const spHttpClient = useSpHttpClient();
-    const { currentSiteUrl, spHttpClient } = useAppContext();
+    const { currentSiteUrl, spHttpClient } = useSampleAppContext();
     
     const [siteLists, setSiteLists] = useState<[]>([]);
 

@@ -1,4 +1,4 @@
-export { useAppContext } from './useAppContext';
+export { useSampleAppContext } from './useAppContext';
 export { useCurrentSiteUrl } from './useCurrentSiteUrl';
 export { useSpHttpClient } from './useSpHttpClient';
-export { useServiceContext } from './useServiceContext';
+export { useAppContext } from './useAppContext';

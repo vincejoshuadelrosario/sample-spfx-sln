@@ -1,4 +1,4 @@
 import { useContext } from 'react';
-import { AppContext } from '../common/AppContext';
+import { SampleAppContext } from '../common/AppContext';
 
-export const useCurrentSiteUrl = (): string => useContext(AppContext)?.currentSiteUrl;
+export const useCurrentSiteUrl = (): string => useContext(SampleAppContext)?.currentSiteUrl;

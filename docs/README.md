@@ -34,4 +34,4 @@ An SPFx WebPart with _React Hooks: useContext_ implementation.
 
 ## Demo-08
 
-An SPFx WebPart with _React Hooks_ and _ServiceScope_ implementation.
+An SPFx WebPart with _React Hooks_ and _ServiceScope_ implementing the _Service Locator Pattern_.
