@@ -1,4 +1,4 @@
-# module-02
+# SharePoint Framework
 
 ## Summary
 
