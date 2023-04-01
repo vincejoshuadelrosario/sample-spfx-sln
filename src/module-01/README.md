@@ -1,4 +1,4 @@
-# module-02
+# spfx-sandbox
 
 ## Summary
 
@@ -56,9 +56,37 @@ Description of the extension that expands upon high-level summary above.
 
 This extension illustrates the following concepts:
 
-- topic 1
-- topic 2
-- topic 3
+- Demo-01
+
+  An SPFx WebPart with _Minimal_ template.
+
+- Demo-02
+
+  An SPFx WebPart with _No Framework_ template.
+
+- Demo-03
+
+  An SPFx WebPart with _React_ template.
+
+- Demo-04
+
+  An SPFx WebPart with _React_ template using _Functional Components_ for _React Hooks_.
+
+- Demo-05
+
+  An SPFx WebPart with _React Hooks: useState and useEffect_ implementation.
+
+- Demo-06
+
+  An SPFx WebPart with _React Hooks: useEffect_ with _AbortController_ implementation.
+
+- Demo-07
+
+  An SPFx WebPart with _React Hooks: useContext_ implementation.
+
+- Demo-08
+
+  An SPFx WebPart with _React Hooks_ and _ServiceScope_ implementing the _Service Locator Pattern_.
 
 > Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
 
