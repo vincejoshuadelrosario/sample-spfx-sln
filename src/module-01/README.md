@@ -1,4 +1,4 @@
-# spfx-sandbox
+# spfx-sandbox-module-01
 
 ## Summary
 

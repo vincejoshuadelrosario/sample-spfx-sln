@@ -1,43 +1,54 @@
 import * as React from 'react';
 import styles from './DragDrop.module.scss';
 import { IDragDropProps } from './IDragDropProps';
-import { escape } from '@microsoft/sp-lodash-subset';
+import { useRef, useState } from 'react';
 
-export default class DragDrop extends React.Component<IDragDropProps, {}> {
-  public render(): React.ReactElement<IDragDropProps> {
-    const {
-      description,
-      isDarkTheme,
-      environmentMessage,
-      hasTeamsContext,
-      userDisplayName
-    } = this.props;
+const DragDrop: React.FC<IDragDropProps> = () => {
+  const dragItem = useRef<number>();
+  const dragOverItem = useRef<number>();
 
-    return (
-      <section className={`${styles.dragDrop} ${hasTeamsContext ? styles.teams : ''}`}>
-        <div className={styles.welcome}>
-          <img alt="" src={isDarkTheme ? require('../assets/welcome-dark.png') : require('../assets/welcome-light.png')} className={styles.welcomeImage} />
-          <h2>Well done, {escape(userDisplayName)}!</h2>
-          <div>{environmentMessage}</div>
-          <div>Web part property value: <strong>{escape(description)}</strong></div>
+  const [list, setList] = useState<string[]>(['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5',]);
+  
+  const onItemDrag = (e: React.DragEvent<HTMLDivElement>, position: number): void => {
+    dragItem.current = position;
+  };
+ 
+  const onItemEnter = (e: React.DragEvent<HTMLDivElement>, position: number): void => {
+    dragOverItem.current = position;
+  };
+
+  const onItemDrop = (): void => {
+    const copyListItems = [...list];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent); 
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setList(copyListItems);
+  };
+
+  const onItemOver = (e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+  };
+
+  return (<section className={styles.dragDrop}>
+    <div className={styles.list}>
+    {
+      list &&
+      list.map((item, index) => (
+        <div className={styles.listItem}
+          onDragStart={(e) => onItemDrag(e, index)}
+          onDragEnter={(e) => onItemEnter(e, index)}
+          onDragOver={(e) => onItemOver(e)}
+          onDragEnd={() => onItemDrop()}
+          key={index}
+          draggable>
+            {item}
         </div>
-        <div>
-          <h3>Welcome to SharePoint Framework!</h3>
-          <p>
-            The SharePoint Framework (SPFx) is a extensibility model for Microsoft Viva, Microsoft Teams and SharePoint. It&#39;s the easiest way to extend Microsoft 365 with automatic Single Sign On, automatic hosting and industry standard tooling.
-          </p>
-          <h4>Learn more about SPFx development:</h4>
-          <ul className={styles.links}>
-            <li><a href="https://aka.ms/spfx" target="_blank" rel="noreferrer">SharePoint Framework Overview</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank" rel="noreferrer">Use Microsoft Graph in your solution</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank" rel="noreferrer">Build for Microsoft Teams using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank" rel="noreferrer">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank" rel="noreferrer">Publish SharePoint Framework applications to the marketplace</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank" rel="noreferrer">SharePoint Framework API reference</a></li>
-            <li><a href="https://aka.ms/m365pnp" target="_blank" rel="noreferrer">Microsoft 365 Developer Community</a></li>
-          </ul>
-        </div>
-      </section>
-    );
-  }
+      )) 
+    }
+    </div>
+  </section>);
 }
+
+export default DragDrop;
