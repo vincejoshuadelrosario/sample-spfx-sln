@@ -52,3 +52,9 @@ This module shows how I would structure my solution when my application grows bi
 - Drag and Drop
 
   An SPFx WebPart with _React Hooks_ showcasing drag and drop capabilities.
+
+## Module-03
+
+- Dynamic Data
+
+  Multiple SPFx WebParts using _dynamic data_ connection.
