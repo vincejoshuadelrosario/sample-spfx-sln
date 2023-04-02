@@ -6,6 +6,13 @@ This solution serves as a sandbox for developing SharePoint Framework v1.16.1 co
 
 These extensions illustrates the following concepts:
 
+
+## Module-00
+
+There's already an existing guide on how you can better structure your solution when developing an SPFx React solution, you can check it from [Patterns and Practices for SPFx Development](https://pnp.github.io/blog/post/patterns-and-practices-for-spfx-development/).
+
+This module shows how I would structure my solution when my application grows bigger as time goes by.
+
 ## Module-01
 
 - Demo-01
@@ -42,6 +49,6 @@ These extensions illustrates the following concepts:
 
 ## Module-02
 
-- DragDrop
+- Drag and Drop
 
   An SPFx WebPart with _React Hooks_ showcasing drag and drop capabilities.
