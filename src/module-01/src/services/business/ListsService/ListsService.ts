@@ -1,22 +1,18 @@
 import { IListService } from "./IListsService";
-import { SPHttpClient } from "@microsoft/sp-http";
-import { PageContext } from '@microsoft/sp-page-context';
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
+import SPHttpService from "../../core/SPHttpService/SPHttpService";
+import { ISPHttpService } from "../../core/SPHttpService/ISPHttpService";
 
 export default class ListsService implements IListService {
     
-    public static readonly ServiceKey: ServiceKey<IListService> =
+    public static readonly serviceKey: ServiceKey<IListService> =
         ServiceKey.create<IListService>('ListsService', ListsService);
 
-    private _spHttpClient: SPHttpClient;
-    private _pageContext: PageContext;
-    private _currentWebUrl: string;
+    private _spHttpService: ISPHttpService;
 
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
-            this._spHttpClient = serviceScope.consume(SPHttpClient.serviceKey);
-            this._pageContext = serviceScope.consume(PageContext.serviceKey);
-            this._currentWebUrl = this._pageContext.web.absoluteUrl;
+            this._spHttpService = serviceScope.consume(SPHttpService.serviceKey);
         });
     }
 
@@ -25,14 +21,18 @@ export default class ListsService implements IListService {
 
         try
         {
-            const rawResponse = await this._spHttpClient.get(`${this._currentWebUrl}/_api/web/lists?$select=Title&$orderby=Title`,
-                                    SPHttpClient.configurations.v1,
+            /**
+             * TODO: Use types/interface to define response model
+             */
+            const response = await this._spHttpService.get<{value: [{Title: string}]}>('/_api/web/lists?$select=Title&$orderby=Title',
                                     this.getOptions(abortController));
-            const response = await rawResponse.json();
-            results = await response.value.map((list: {Title: string}) => list.Title);
+            results = response.value.map((list: {Title: string}) => list.Title);
         }
         catch(ex)
         {
+            /**
+             * TODO: Implement proper error handling
+             */
             console.error(ex);
         }
 
