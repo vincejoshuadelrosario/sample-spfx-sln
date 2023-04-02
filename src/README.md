@@ -58,3 +58,15 @@ This module shows how I would structure my solution when my application grows bi
 - Dynamic Data
 
   Multiple SPFx WebParts using _dynamic data_ connection.
+
+  - WebPart-01
+
+    Dynamic Data Source
+
+  - WebPart-02
+
+    Dynamic Data Target
+
+  - WebPart-03
+
+    Consume Dynamic Data from Page Environment
