@@ -1,9 +1,12 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
+import { DynamicProperty } from '@microsoft/sp-component-base';
 import {
+  DynamicDataSharedDepth,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneDynamicField,
+  PropertyPaneDynamicFieldSet,
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -12,15 +15,16 @@ import WebPart02 from './components/WebPart02';
 import { IWebPart02Props } from './components/IWebPart02Props';
 
 export interface IWebPart02WebPartProps {
-  description: string;
+  dynamicData: DynamicProperty<string>;
 }
 
 export default class WebPart02WebPart extends BaseClientSideWebPart<IWebPart02WebPartProps> {
-
+  
   public render(): void {
     const element: React.ReactElement<IWebPart02Props> = React.createElement(
       WebPart02,
       {
+        output: this.properties.dynamicData?.tryGetValue()
       }
     );
 
@@ -44,14 +48,22 @@ export default class WebPart02WebPart extends BaseClientSideWebPart<IWebPart02We
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: 'Use Property Pane to configure your Dynamic Data source'
           },
           groups: [
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneDynamicFieldSet({
+                  label: 'Select Dynamic Data source',
+                  fields: [
+                    PropertyPaneDynamicField('dynamicData', {
+                      label: 'Dynamic Data source'
+                    })
+                  ],
+                  sharedConfiguration: {
+                    depth: DynamicDataSharedDepth.Property
+                  }
                 })
               ]
             }

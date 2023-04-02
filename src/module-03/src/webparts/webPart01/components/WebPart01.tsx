@@ -5,13 +5,13 @@ import { Label } from '@fluentui/react/lib/Label';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { useState } from 'react';
 
-const WebPart01: React.FC<IWebPart01Props> = ({onEventSelected}) => {
+const WebPart01: React.FC<IWebPart01Props> = ({onDynamicDataSelected}) => {
 
   const [ input, setInput ] = useState<string>('');
 
   const onChangeText = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
     setInput(newValue);
-    onEventSelected({value: newValue});
+    onDynamicDataSelected(newValue);
   };
 
   return (
@@ -22,11 +22,11 @@ const WebPart01: React.FC<IWebPart01Props> = ({onEventSelected}) => {
         value={input}
         onChange={onChangeText}
       />
-      <TextField
+      {/* <TextField
         label="Output"
         disabled
         value={input}
-      />
+      /> */}
     </section>
   );
 }

@@ -3,7 +3,6 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import {
@@ -11,13 +10,8 @@ import {
   IDynamicDataCallables
 } from '@microsoft/sp-dynamic-data';
 
-import * as strings from 'WebPart01WebPartStrings';
 import WebPart01 from './components/WebPart01';
 import { IWebPart01Props } from './components/IWebPart01Props';
-
-export interface IEvent {
-  value: string;
-}
 
 export interface IWebPart01WebPartProps {
   description: string;
@@ -25,15 +19,15 @@ export interface IWebPart01WebPartProps {
 
 export default class WebPart01WebPart extends BaseClientSideWebPart<IWebPart01WebPartProps> implements IDynamicDataCallables {
   /**
-   * Currently selected event
+   * Currently selected Dynamic Data
    */
-  private _selectedEvent: IEvent;
+  private _selectedDynamicData: string;
 
   public render(): void {
     const element: React.ReactElement<IWebPart01Props> = React.createElement(
       WebPart01,
       {
-        onEventSelected: this._eventSelected
+        onDynamicDataSelected: this._dynamicDataSelected
       }
     );
 
@@ -46,7 +40,7 @@ export default class WebPart01WebPart extends BaseClientSideWebPart<IWebPart01We
    */
   public getPropertyDefinitions(): ReadonlyArray<IDynamicDataPropertyDefinition> {
     return [
-      { id: 'event', title: 'Event' }
+      { id: 'dynamicData', title: 'Dynamic Data' }
     ];
   }
 
@@ -54,10 +48,10 @@ export default class WebPart01WebPart extends BaseClientSideWebPart<IWebPart01We
    * Return the current value of the specified dynamic data set
    * @param propertyId ID of the dynamic data set to retrieve the value for
    */
-  public getPropertyValue(propertyId: string): IEvent {
+  public getPropertyValue(propertyId: string): string {
     switch (propertyId) {
-      case 'event':
-        return this._selectedEvent;
+      case 'dynamicData':
+        return this._selectedDynamicData;
     }
 
     throw new Error('Bad property id');
@@ -79,32 +73,14 @@ export default class WebPart01WebPart extends BaseClientSideWebPart<IWebPart01We
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
-    return {
-      pages: [
-        {
-          header: {
-            description: strings.PropertyPaneDescription
-          },
-          groups: [
-            {
-              groupName: strings.BasicGroupName,
-              groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                })
-              ]
-            }
-          ]
-        }
-      ]
-    };
+    return super.getPropertyPaneConfiguration();
   }
 
-  private _eventSelected = (event: IEvent): void => {
-    // store the currently selected event in the class variable. Required
+  private _dynamicDataSelected = (dynamicData: string): void => {
+    // store the currently selected dynamic data in the class variable. Required
     // so that connected component will be able to retrieve its value
-    this._selectedEvent = event;
-    // notify subscribers that the selected event has changed
-    this.context.dynamicDataSourceManager.notifyPropertyChanged('event');
+    this._selectedDynamicData = dynamicData;
+    // notify subscribers that the selected dynamic data has changed
+    this.context.dynamicDataSourceManager.notifyPropertyChanged('dynamicData');
   }
 }
