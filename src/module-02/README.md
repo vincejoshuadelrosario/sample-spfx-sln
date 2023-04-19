@@ -1,4 +1,4 @@
-# # spfx-sandbox-module-02
+# spfx-sandbox-module-02
 
 ## Summary
 
@@ -8,7 +8,7 @@ Short summary on functionality and used technologies.
 
 ## Used SharePoint Framework Version
 
-![version](https://img.shields.io/badge/version-1.16.1-green.svg)
+![version](https://img.shields.io/badge/version-1.17.0-green.svg)
 
 ## Applies to
 
@@ -56,9 +56,9 @@ Description of the extension that expands upon high-level summary above.
 
 This extension illustrates the following concepts:
 
-- DragDrop
-
-  An SPFx WebPart with _React Hooks_ showcasing drag and drop capabilities.
+- topic 1
+- topic 2
+- topic 3
 
 > Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
 

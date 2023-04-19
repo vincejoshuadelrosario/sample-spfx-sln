@@ -1,6 +1,6 @@
 # Overview
 
-This solution serves as a sandbox for developing SharePoint Framework v1.16.1 components
+This solution serves as a sandbox for developing SharePoint Framework v1.17.0 components
 
 # Features
 
