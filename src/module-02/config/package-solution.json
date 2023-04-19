@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "spfx-sandbox-module-02-client-side-solution",
-    "id": "64c9b263-9959-49d1-8fd1-176b899c7b20",
+    "id": "8148fb05-9ad7-4330-80ac-d3d1889b6f0d",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
@@ -12,7 +12,7 @@
       "websiteUrl": "",
       "privacyUrl": "",
       "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.16.1"
+      "mpnId": "Undefined-1.17.0"
     },
     "metadata": {
       "shortDescription": {
@@ -29,7 +29,7 @@
       {
         "title": "spfx-sandbox-module-02 Feature",
         "description": "The feature that activates elements of the spfx-sandbox-module-02 solution.",
-        "id": "68b61dce-87eb-4309-8c35-95e8f18e86ff",
+        "id": "4a445187-98b5-4860-816d-cccfc763c643",
         "version": "1.0.0.0"
       }
     ]

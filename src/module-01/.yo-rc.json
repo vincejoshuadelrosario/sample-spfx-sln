@@ -2,18 +2,18 @@
   "@microsoft/generator-sharepoint": {
     "plusBeta": false,
     "isCreatingSolution": false,
-    "nodeVersion": "16.13.2",
+    "nodeVersion": "16.18.1",
     "sdksVersions": {
       "@microsoft/microsoft-graph-client": "3.0.2",
-      "@microsoft/teams-js": "2.4.1"
+      "@microsoft/teams-js": "2.9.1"
     },
-    "version": "1.16.1",
-    "libraryName": "spfx-sandbox",
-    "libraryId": "6f4bbf0f-7a99-43e0-ba0b-244925e3c93a",
+    "version": "1.17.0",
+    "libraryName": "spfx-sandbox-module-01",
+    "libraryId": "d5d18cbe-90a4-4ca1-b304-b9bf5187cee9",
     "environment": "spo",
     "packageManager": "npm",
-    "solutionName": "spfx-sandbox",
-    "solutionShortDescription": "spfx-sandbox description",
+    "solutionName": "spfx-sandbox-module-01",
+    "solutionShortDescription": "spfx-sandbox-module-01 description",
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "componentType": "webpart"
