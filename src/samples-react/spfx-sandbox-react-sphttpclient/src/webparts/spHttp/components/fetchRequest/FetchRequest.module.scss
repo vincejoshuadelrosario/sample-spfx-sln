@@ -1,0 +1,22 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.response {
+    background: white;
+    color: "[theme: themeDarker, default: #0d0739]";
+    border-color: "[theme: themeDarker, default: #0d0739]";
+    border: 1px solid;
+    box-shadow: none;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    cursor: text;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    position: relative;
+    min-height: 60px;
+    max-height: 600px;
+    overflow: auto;
+}

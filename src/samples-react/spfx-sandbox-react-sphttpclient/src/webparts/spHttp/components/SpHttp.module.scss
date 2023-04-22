@@ -1,0 +1,20 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.spHttp {
+  background-color: "[theme: themeLighter, default: #cac6e7]";
+  color: "[theme: themeDarker, default: #0d0739]";
+  border-color: "[theme: themeDarker, default: #0d0739]";
+  overflow: hidden;
+}
+
+.container {
+  color: "[theme: themeDark, default: #120a4e]";
+}
+
+.title {
+  background-color: "[theme: themeDarkAlt, default: #150c5c]";
+  color: "[theme: themeLighterAlt, default: #f1f0f9]";
+  border-color: "[theme: themeDarker, default: #0d0739]";
+  text-align: center;
+  border: 1px solid;
+}
