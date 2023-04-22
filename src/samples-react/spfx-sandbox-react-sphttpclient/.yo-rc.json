@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "16.18.1",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.9.1"
+    },
+    "version": "1.17.0",
+    "libraryName": "spfx-sandbox-react-sphttpservice",
+    "libraryId": "1ebc31ba-737d-4e2d-982e-b57f6854ed0e",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "spfx-sandbox-react-sphttpservice",
+    "solutionShortDescription": "spfx-sandbox-react-sphttpservice description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
