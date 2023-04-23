@@ -15,6 +15,7 @@ export const useSPPost = (setState: React.Dispatch<React.SetStateAction<[string,
             .catch(err => {
                 if (!abortController.signal.aborted) {
                     setState(['', false, err]);
+                    return;
                 }
                 setState(['', false, undefined]);
             });
