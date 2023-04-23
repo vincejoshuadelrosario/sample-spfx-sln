@@ -1,13 +1,16 @@
 import * as React from 'react';
+import styles from './FetchRequest.module.scss';
 import { IFetchRequestProps } from './IFetchRequestProps';
+import { useSPGet, useSPPost } from '../../../../hooks';
 import { ITextField, ITextFieldProps, TextField } from 'office-ui-fabric-react/lib/TextField';
 import { BaseButton, Button, IButtonProps, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { IDropdownProps, Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { ISpinnerProps, Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { useSPGet, useSPPost } from '../../../../hooks';
-import styles from './FetchRequest.module.scss';
+import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
+import { Callout } from 'office-ui-fabric-react/lib/Callout';
+import { useBoolean, useId } from '@fluentui/react-hooks';
 
 export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
@@ -65,7 +68,7 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
     const httpMethodDropdownProps: IDropdownProps = {
         styles: { 
-            root: { width: '80px'}
+            root: { width: 'auto'}
         },
         options: [
             { key: 'get', text: 'GET', selected: true },
@@ -76,7 +79,7 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
     const requestUrlTextFieldProps: ITextFieldProps = {
         styles: { 
-            root: { width: '583px'}
+            root: { width: 'auto'}
         },
         defaultValue: defaultUrl,
         componentRef: requestUrlTextField,
@@ -85,9 +88,7 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
     const requestSendButtonProps: IButtonProps = {
         styles: { 
-            root: {
-                width: '80px'
-            },
+            root: { width: 'auto'},
             flexContainer: {
                 flexDirection: 'row-reverse'
             }
@@ -99,11 +100,62 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         onClick: (e) => onButtonSend(e)
     };
 
+    const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
+    const iconId = useId('callout-button');
+    const labelId = useId('callout-label');
+    const descriptionId = useId('callout-description');
     const requestHeadersTextFieldProps: ITextFieldProps = {
-        label: 'Headers',
         multiline: true,
         rows: 3,
-        componentRef: requestHeadersTextField
+        componentRef: requestHeadersTextField,
+        onRenderLabel: () => (<Stack horizontal>
+            <Stack.Item>
+                <Label>Headers</Label>
+            </Stack.Item>
+            <Stack.Item>
+                <FontIcon id={iconId} iconName='Info' className={styles.icon} onClick={toggleIsCalloutVisible} />
+                {isCalloutVisible && (
+                    <Callout
+                    className={styles.callout}
+                    ariaLabelledBy={labelId}
+                    ariaDescribedBy={descriptionId}
+                    role="dialog"
+                    gapSpace={0}
+                    target={`#${iconId}`}
+                    onDismiss={toggleIsCalloutVisible}
+                    setInitialFocus
+                    >
+                    <h4>CREATE:</h4>
+                        <pre>{JSON.stringify({
+                            'Accept': 'application/json;odata=nometadata',
+                            'Content-type': 'application/json;odata=nometadata',
+                            'odata-version': ''
+                        }, null, '\t')}</pre>
+                        <h4>READ:</h4>
+                        <pre>{JSON.stringify({
+                            'Accept': 'application/json;odata=nometadata',
+                            'odata-version': ''
+                        }, null, '\t')}</pre>
+                        <h4>UPDATE:</h4>
+                        <pre>{JSON.stringify({
+                            'Accept': 'application/json;odata=nometadata',
+                            'Content-type': 'application/json;odata=nometadata',
+                            'odata-version': '',
+                            'IF-MATCH': '*',
+                            'X-HTTP-Method': 'MERGE'
+                        }, null, '\t')}</pre>
+                        <h4>DELETE:</h4>
+                        <pre>{JSON.stringify({
+                            'Accept': 'application/json;odata=nometadata',
+                            'Content-type': 'application/json;odata=verbose',
+                            'odata-version': '',
+                            'IF-MATCH': '*',
+                            'X-HTTP-Method': 'DELETE'
+                        }, null, '\t')}</pre>
+                    </Callout>
+                )}
+            </Stack.Item>
+        </Stack>)
     };
 
     const requestBodyTextFieldProps: ITextFieldProps = {
@@ -112,13 +164,6 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         rows: 4,
         componentRef: requestBodyTextField,
         disabled: isRequestBodyDisabled
-    };
-
-    const errorTextFieldProps: ITextFieldProps = {
-        label: 'Response',
-        multiline: true,
-        rows: 5,
-        value: error?.message
     };
 
     const loadingSpinnerProps: ISpinnerProps = {
@@ -131,13 +176,13 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         </Stack.Item>
         <Stack.Item>
             <Stack horizontal>
-                <Stack.Item>
+                <Stack.Item className={styles.requestUrlMethod}>
                     <Dropdown {...httpMethodDropdownProps} />
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item className={styles.requestUrlInput}>
                     <TextField {...requestUrlTextFieldProps} />
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item className={styles.requestUrlSend}>
                     <PrimaryButton {...requestSendButtonProps} />
                 </Stack.Item>
             </Stack>
@@ -150,12 +195,14 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         </Stack.Item>
         <Stack.Item>
             <Label>Response</Label>
-            {error 
-                ? <TextField {...errorTextFieldProps} />
-                : <div className={styles.response}>
-                    {isLoading
-                        ? <Spinner {...loadingSpinnerProps} />
-                        : <pre>{response}</pre>}
+            {isLoading
+                ? <div className={`${styles.container} ${styles.spinner}`}>
+                    <Spinner {...loadingSpinnerProps} />
+                </div>
+                : <div className={`${styles.container} ${styles.response}`}>
+                    {error
+                    ? error.message
+                    : <pre>{response}</pre>}
                 </div>}
         </Stack.Item>
     </Stack>);

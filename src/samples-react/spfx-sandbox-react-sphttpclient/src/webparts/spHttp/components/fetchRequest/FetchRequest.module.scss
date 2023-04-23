@@ -1,6 +1,6 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
-.response {
+.container {
     background: white;
     color: "[theme: themeDarker, default: #0d0739]";
     border-color: "[theme: themeDarker, default: #0d0739]";
@@ -10,13 +10,56 @@
     padding: 0px;
     box-sizing: border-box;
     border-radius: 2px;
-    cursor: text;
     height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    position: relative;
     min-height: 60px;
     max-height: 600px;
+    display: flex;
+}
+
+.response {
+    cursor: text;
+    flex-direction: row;
+    align-items: stretch;
     overflow: auto;
+}
+
+.spinner {
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    pointer-events: none;
+    border-color: "[theme: neutralLighter, default: #f3f2f1]";
+    background-color: "[theme: neutralLighter, default: #f3f2f1]";
+}
+
+// .spinner {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+.icon {
+    font-size: 15px;
+    height: 15px;
+    width: 15px;
+    margin: 5px;
+    user-select: none;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.callout {
+    padding: 20px 24px;
+}
+
+.requestUrlMethod {
+    width: 8%;
+}
+.requestUrlSend {
+    width: 8%;
+}
+.requestUrlInput {
+    width: 84%;
 }
