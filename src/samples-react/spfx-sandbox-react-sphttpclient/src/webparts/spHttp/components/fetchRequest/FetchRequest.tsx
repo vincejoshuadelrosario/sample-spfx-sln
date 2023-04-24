@@ -9,14 +9,14 @@ import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { ISpinnerProps, Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
-import { Callout } from 'office-ui-fabric-react/lib/Callout';
+import { Callout, ICalloutProps } from 'office-ui-fabric-react/lib/Callout';
 import { useBoolean, useId } from '@fluentui/react-hooks';
 
 export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
     /* React Hooks */
 
-    const [ {method, isRequestBodyDisabled}, setHttpMethod ] = React.useState<{method: string, isRequestBodyDisabled: boolean}>({method: 'get', isRequestBodyDisabled: true});
+    const [ [method, isRequestBodyDisabled], setHttpMethod ] = React.useState<[method: string, isRequestBodyDisabled: boolean]>(['get', true]);
     const [ [response, isLoading, error], setFetchRequest ] = React.useState<[result: string, isLoading: boolean, error: Error]>(['', false, undefined]);
     const requestUrlTextField = React.useRef<ITextField>();
     const requestHeadersTextField = React.useRef<ITextField>();
@@ -27,27 +27,62 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
 
     const [ spGet ] = useSPGet(setFetchRequest);
     const [ spPost ] = useSPPost(setFetchRequest);
-    
+
+    /* Fluent UI Hooks */
+
+    const [isRequestHeadersCalloutErrorVisible, { toggle: toggleIsRequestHeadersCalloutErrorVisible }] = useBoolean(false);
+    const calloutInputId = useId('callout-input');
+    const calloutInputErrorLabelId = useId('callout-input-error-label');
+    const calloutInputErrorDescriptionId = useId('callout-input-error-description');
+    const [isRequestHeadersCalloutInfoVisible, { toggle: toggleIsRequestHeadersCalloutInfoVisible }] = useBoolean(false);
+    const calloutInfoIconId = useId('callout-info-icon');
+    const calloutInfoLabelId = useId('callout-info-label');
+    const calloutInfoDescriptionId = useId('callout-info-description');
+
     /* Functions */
 
     const onMethodChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption): void => {
         if (option.key === 'post') {
-            setHttpMethod({method: 'post', isRequestBodyDisabled: false});
+            setHttpMethod(['post', false]);
             return;
         }
 
-        setHttpMethod({method: 'get', isRequestBodyDisabled: true});
+        setHttpMethod(['get', true]);
+    };
+
+    const parseRequestHeaders = (input: string): {} => {
+        try {
+            return JSON.parse(input);
+        }
+        catch {
+            toggleIsRequestHeadersCalloutErrorVisible();
+            return false;
+        }
     };
 
     const fetchRequest = (): void => {
+        const requestHeaders = parseRequestHeaders(requestHeadersTextField.current.value);
+        if (!requestHeaders) {
+            return;
+        }
+
         switch (method) {
             case 'post':
                 abortController.current?.abort();
-                abortController.current = spPost(requestUrlTextField.current.value, { headers: requestHeadersTextField.current.value, body: requestBodyTextField.current.value });
+                abortController.current = spPost(
+                    requestUrlTextField.current.value,
+                    {
+                        headers: requestHeaders,
+                        body: requestBodyTextField.current.value
+                    });
                 break;
             case 'get':
                 abortController.current?.abort();
-                abortController.current = spGet(requestUrlTextField.current.value, { headers: requestHeadersTextField.current.value });
+                abortController.current = spGet(
+                    requestUrlTextField.current.value,
+                    {
+                        headers: requestHeaders
+                    });
                 break;
             default:
                 setFetchRequest(['', false, new Error('Unsupported HTTP Method.')]);
@@ -100,29 +135,27 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         onClick: (e) => onButtonSend(e)
     };
 
-    const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
-    const iconId = useId('callout-button');
-    const labelId = useId('callout-label');
-    const descriptionId = useId('callout-description');
     const requestHeadersTextFieldProps: ITextFieldProps = {
+        id: calloutInputId,
         multiline: true,
         rows: 3,
+        defaultValue: '{}',
         componentRef: requestHeadersTextField,
         onRenderLabel: () => (<Stack horizontal>
             <Stack.Item>
                 <Label>Headers</Label>
             </Stack.Item>
             <Stack.Item>
-                <FontIcon id={iconId} iconName='Info' className={styles.icon} onClick={toggleIsCalloutVisible} />
-                {isCalloutVisible && (
+                <FontIcon id={calloutInfoIconId} iconName='Info' className={styles.icon} onClick={toggleIsRequestHeadersCalloutInfoVisible} />
+                {isRequestHeadersCalloutInfoVisible && (
                     <Callout
                     className={styles.callout}
-                    ariaLabelledBy={labelId}
-                    ariaDescribedBy={descriptionId}
+                    ariaLabelledBy={calloutInfoLabelId}
+                    ariaDescribedBy={calloutInfoDescriptionId}
                     role="dialog"
                     gapSpace={0}
-                    target={`#${iconId}`}
-                    onDismiss={toggleIsCalloutVisible}
+                    target={`#${calloutInfoIconId}`}
+                    onDismiss={toggleIsRequestHeadersCalloutInfoVisible}
                     setInitialFocus
                     >
                     <h4>CREATE:</h4>
@@ -158,11 +191,23 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         </Stack>)
     };
 
+    const requestHeadersCalloutInputErrorProps: ICalloutProps = {
+        className: `${styles.callout} ${styles.error}`,
+        ariaLabelledBy: calloutInputErrorLabelId,
+        ariaDescribedBy: calloutInputErrorDescriptionId,
+        role: "dialog",
+        gapSpace: 0,
+        target: `#${calloutInputId}`,
+        onDismiss: toggleIsRequestHeadersCalloutErrorVisible,
+        setInitialFocus: true
+    };
+
     const requestBodyTextFieldProps: ITextFieldProps = {
         label: 'Body',
         multiline: true,
         rows: 4,
         componentRef: requestBodyTextField,
+        defaultValue: '{}',
         disabled: isRequestBodyDisabled
     };
 
@@ -189,6 +234,11 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
         </Stack.Item>
         <Stack.Item>
             <TextField {...requestHeadersTextFieldProps} />
+            {isRequestHeadersCalloutErrorVisible && (
+                    <Callout {...requestHeadersCalloutInputErrorProps}>
+                        Invalid request headers: Please enter a valid JSON string.
+                    </Callout>
+                )}
         </Stack.Item>
         <Stack.Item>
             <TextField {...requestBodyTextFieldProps} />
@@ -201,7 +251,7 @@ export const FetchRequest: React.FC<IFetchRequestProps> = ({defaultUrl}) => {
                 </div>
                 : <div className={`${styles.container} ${styles.response}`}>
                     {error
-                    ? error.message
+                    ? <pre className={styles.error}>{error.message}</pre>
                     : <pre>{response}</pre>}
                 </div>}
         </Stack.Item>

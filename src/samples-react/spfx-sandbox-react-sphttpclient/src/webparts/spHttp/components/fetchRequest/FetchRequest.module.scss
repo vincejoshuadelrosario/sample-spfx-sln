@@ -32,12 +32,6 @@
     background-color: "[theme: neutralLighter, default: #f3f2f1]";
 }
 
-// .spinner {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
-
 .icon {
     font-size: 15px;
     height: 15px;
@@ -54,12 +48,16 @@
     padding: 20px 24px;
 }
 
+.error {
+    color: "[theme: redDark, default: #a4262c]";
+}
+
 .requestUrlMethod {
-    width: 8%;
+    width: 10%;
 }
 .requestUrlSend {
     width: 8%;
 }
 .requestUrlInput {
-    width: 84%;
+    width: 82%;
 }

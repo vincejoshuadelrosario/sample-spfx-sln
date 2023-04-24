@@ -50,12 +50,13 @@ export class SPHttpService implements ISPHttpService {
             SPHttpClient.configurations.v1,
             {...options});
 
+        const response = await rawResponse.json();
+
         if (rawResponse.ok) {
-            const response = await rawResponse.json();
             return response;
         }
 
-        throw new Error(`Server did not respond as expected. Status: (${rawResponse.status}) ${rawResponse.statusText}`);
+        throw this.onError(rawResponse.status, response);
     }
 
     public async post<T>(url: string, options?: { headers?: {}, body?: string, signal?: AbortSignal; }): Promise<T | Error> {
@@ -63,11 +64,16 @@ export class SPHttpService implements ISPHttpService {
             SPHttpClient.configurations.v1,
             {...options});
 
-            if (rawResponse.ok) {
-                const response = await rawResponse.json();
-                return response;
-            }
-    
-            throw new Error(`Server did not respond as expected. Status: (${rawResponse.status}) ${rawResponse.statusText}`);
+        const response = await rawResponse.json();
+
+        if (rawResponse.ok) {
+            return response;
+        }
+
+        throw this.onError(rawResponse.status, response);
+    }
+
+    private onError(statusCode: number, response: unknown): Error {
+        return new Error(`Server did not respond as expected. Status: (${statusCode}).\n\n${JSON.stringify(response, null, '\t')}`);
     }
 }
