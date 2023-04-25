@@ -2,7 +2,7 @@ import {
     ServiceKey,
     ServiceScope
 } from "@microsoft/sp-core-library";
-import { SPHttpClient } from '@microsoft/sp-http';
+import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 import { ISPHttpService } from ".";
 
 export class SPHttpService implements ISPHttpService {
@@ -50,30 +50,31 @@ export class SPHttpService implements ISPHttpService {
             SPHttpClient.configurations.v1,
             {...options});
 
-        const response = await rawResponse.json();
-
-        if (rawResponse.ok) {
-            return response;
+        if (!rawResponse.ok) {
+            throw await this.onError(rawResponse);
         }
 
-        throw this.onError(rawResponse.status, response);
+        return await rawResponse.json();
     }
 
-    public async post<T>(url: string, options?: { headers?: {}, body?: string, signal?: AbortSignal; }): Promise<T | Error> {
+    public async post<T>(url: string, options?: { headers?: {}, body?: string, signal?: AbortSignal; }): Promise<T | {} | Error> {
         const rawResponse = await this._spHttpClient.post(url,
             SPHttpClient.configurations.v1,
             {...options});
 
-        const response = await rawResponse.json();
-
-        if (rawResponse.ok) {
-            return response;
+        if (!rawResponse.ok) {
+            throw await this.onError(rawResponse);
         }
 
-        throw this.onError(rawResponse.status, response);
+        if (rawResponse.status === 204 || rawResponse.headers.get("Content-Length") === "0")
+        {
+            return {};
+        }
+
+        return await rawResponse.json();
     }
 
-    private onError(statusCode: number, response: unknown): Error {
-        return new Error(`Server did not respond as expected. Status: (${statusCode}).\n\n${JSON.stringify(response, null, '\t')}`);
+    private async onError(response: SPHttpClientResponse): Promise<Error> {
+        return new Error(`Server did not respond as expected. Status: (${response.status}).\n\n${JSON.stringify(await response.json(), null, '\t')}`);
     }
 }
